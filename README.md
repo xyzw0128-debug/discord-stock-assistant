@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Discord Korean Stock Portfolio Assistant
 
 Minimal production-ready Python project scaffold for a Discord-based Korean stock portfolio assistant.
@@ -23,3 +24,6 @@ Minimal production-ready Python project scaffold for a Discord-based Korean stoc
    ```
 3. Create `.env` from `.env.example` and set values.
 4. Run migrations with Alembic.
+=======
+# discord-stock-assistant
+>>>>>>> 7042d8848570600b201de53bdbc81209f250e6f5
