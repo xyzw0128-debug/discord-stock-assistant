@@ -28,7 +28,7 @@ Users upload brokerage screenshots → OCR extracts holdings → portfolio chang
 
 # 2. Product Core Flow
 
-```text
+text
 User uploads screenshot
 → OCR reads holdings
 → Match stock names / tickers
