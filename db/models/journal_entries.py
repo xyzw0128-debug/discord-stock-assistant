@@ -1,5 +1,8 @@
-from sqlalchemy import CheckConstraint, Date, ForeignKey, Integer, String, Text, text
+from datetime import date, datetime
+
+from sqlalchemy import CheckConstraint, Date, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import func
 
 from .base import Base
 
@@ -10,11 +13,11 @@ class JournalEntry(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     snapshot_id: Mapped[int | None] = mapped_column(ForeignKey("portfolio_snapshots.id"))
-    entry_date: Mapped[str] = mapped_column(Date, nullable=False)
+    entry_date: Mapped[date] = mapped_column(Date, nullable=False)
     raw_input: Mapped[str | None] = mapped_column(Text)
     ai_summary: Mapped[str | None] = mapped_column(Text)
     emotion_tag: Mapped[str | None] = mapped_column(String(20))
-    created_at = mapped_column(Text, server_default=text("NOW()"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     __table_args__ = (
         CheckConstraint(
