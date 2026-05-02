@@ -24,5 +24,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
+    op.execute("DROP TABLE IF EXISTS alerts;")
     op.execute("DROP TABLE IF EXISTS journal_entries;")
     op.execute("DROP TABLE IF EXISTS portfolio_changes;")
