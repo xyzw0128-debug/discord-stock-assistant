@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Discord Korean Stock Portfolio Assistant
 
 Minimal production-ready Python project scaffold for a Discord-based Korean stock portfolio assistant.
