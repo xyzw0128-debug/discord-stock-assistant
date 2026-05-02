@@ -1,0 +1,473 @@
+# PROJECT_MEMORY.md
+
+# Discord Stock Assistant — Full Project Memory (Phase 0 ~ Phase 4)
+
+Last Updated: 2026-05-02  
+Status: Stable baseline restored after repository integrity recovery.
+
+---
+
+# 1. Project Identity
+
+## Project Name
+discord-stock-assistant
+
+## Core Vision
+Build a Discord-based Korean stock portfolio assistant for Korean retail investors.
+
+Users upload brokerage screenshots → OCR extracts holdings → portfolio changes tracked → personalized insights, alerts, journaling support.
+
+## Target Users
+
+- Korean retail investors
+- Long-term investors tracking positions
+- Users who want simple portfolio automation
+- Discord community / investing group members
+
+---
+
+# 2. Product Core Flow
+
+```text
+User uploads screenshot
+→ OCR reads holdings
+→ Match stock names / tickers
+→ Save snapshot
+→ Compare with previous snapshot
+→ Detect buy/sell/add/reduce
+→ Generate summary
+→ Send Discord response / alerts
+→ Store journal history
+3. Current Development Status
+✅ Phase 0 complete
+✅ Phase 1 complete
+✅ Phase 2 complete
+✅ Phase 3 complete
+✅ Phase 4 complete
+
+⚠️ OCR production implementation not started
+⚠️ Discord MVP bot not completed
+⚠️ Supabase production migration pending
+⚠️ Tests still minimal
+4. Tech Stack
+Language
+Python 3.11
+
+Backend
+discord.py
+
+SQLAlchemy 2.x
+
+Alembic
+
+Database
+PostgreSQL
+
+Supabase planned
+
+OCR
+PaddleOCR (planned / POC pending)
+
+Market Data
+pykrx
+
+Scheduler
+APScheduler or cron
+
+DevOps / Infra
+GitHub
+
+GitHub Codespaces
+
+VSCode
+
+Codex
+
+Claude (review)
+
+ChatGPT (planning / PM)
+
+5. Repository Structure
+discord-stock-assistant/
+
+main.py
+requirements.txt
+README.md
+.env.example
+.gitignore
+alembic.ini
+
+app/
+db/
+tests/
+6. App Structure
+app/
+
+main.py
+config.py
+bot.py
+
+services/
+    ocr_service.py
+    portfolio_service.py
+    alert_service.py
+
+utils/
+    logger.py
+    helpers.py
+7. Database Architecture (Completed Through Phase 4)
+Phase 1 — Core Identity Layer
+users
+Purpose:
+
+One row per Discord user / customer.
+
+Fields (expected):
+
+id
+discord_user_id
+username
+created_at
+updated_at
+Use Cases:
+
+identify owner of portfolios
+
+preferences
+
+alert ownership
+
+stocks_master
+Purpose:
+
+Master table of Korean listed stocks.
+
+Fields:
+
+id
+ticker
+stock_name_kr
+market_type
+is_active
+updated_at
+Use Cases:
+
+canonical stock reference
+
+ticker lookup
+
+stock_aliases
+Purpose:
+
+OCR text often messy. Alias table maps noisy names.
+
+Examples:
+
+삼성전자우
+삼전
+Samsung Elec
+→ 삼성전자
+
+Fields:
+
+id
+stock_id
+alias_name
+created_at
+Use Cases:
+
+OCR correction
+
+fuzzy matching
+
+Phase 2 — Snapshot / OCR Layer
+portfolio_snapshots
+Purpose:
+
+One upload = one portfolio state.
+
+Fields:
+
+id
+user_id
+uploaded_at
+source_type
+image_path(optional)
+total_value(optional)
+notes
+Use Cases:
+
+historical portfolio states
+
+compare snapshots
+
+holdings
+Purpose:
+
+Detailed holdings belonging to a snapshot.
+
+Fields:
+
+id
+snapshot_id
+stock_id
+quantity
+avg_price(optional)
+market_price(optional)
+weight(optional)
+Use Cases:
+
+calculate allocation
+
+compare changes
+
+ocr_unmatched
+Purpose:
+
+When OCR text cannot map to stock.
+
+Fields:
+
+id
+snapshot_id
+raw_text
+reason
+resolved_flag
+created_at
+Use Cases:
+
+improve alias table
+
+monitor OCR quality
+
+Phase 3 — Insight / Activity Layer
+portfolio_changes
+Purpose:
+
+Store differences between two snapshots.
+
+Examples:
+
+Bought 10 Samsung
+Sold 5 SK Hynix
+Added position in NAVER
+Exited Kakao
+Fields:
+
+id
+user_id
+old_snapshot_id
+new_snapshot_id
+change_type
+stock_id
+old_qty
+new_qty
+delta_qty
+created_at
+Use Cases:
+
+auto summaries
+
+notifications
+
+journal_entries
+Purpose:
+
+Investment diary linked to events.
+
+Fields:
+
+id
+user_id
+snapshot_id(optional)
+title
+content
+mood(optional)
+created_at
+Use Cases:
+
+reflection log
+
+why user bought/sold
+
+alerts
+Purpose:
+
+User-facing notifications.
+
+Examples:
+
+Rebalancing drift high
+Large concentration risk
+OCR failed
+Snapshot processed
+Fields:
+
+id
+user_id
+alert_type
+message
+is_read
+created_at
+Use Cases:
+
+Discord DM / channel alerts
+
+Phase 4 — User Settings / Operations Layer
+user_preferences
+Purpose:
+
+Store personalization settings.
+
+Fields:
+
+id
+user_id
+language
+timezone
+alert_enabled
+risk_profile(optional)
+summary_style(optional)
+updated_at
+Use Cases:
+
+custom responses
+
+scheduling
+
+upload_logs
+Purpose:
+
+Operational logging of uploads.
+
+Fields:
+
+id
+user_id
+snapshot_id(optional)
+filename
+status
+error_message(optional)
+processing_ms(optional)
+created_at
+Use Cases:
+
+debug OCR failures
+
+monitor reliability
+
+8. Migration Status
+Alembic revision chain confirmed linear:
+
+phase1
+→ phase2
+→ phase3
+→ phase4
+Validated:
+
+alembic heads
+alembic history
+No broken chain.
+
+9. Recent Recovery Work Completed
+Repository had partial overwrite / merge issues.
+
+Recovered:
+
+README.md conflict markers removed
+.env.example restored
+app/main.py restored
+app/config.py restored
+app/bot.py restored
+structure normalized
+imports validated
+compile checks passed
+Commit created:
+
+Restore phase 0-4 scaffold integrity and resolve overwrite artifacts
+10. Immediate Next Milestones (Phase 5+ Not Started)
+Priority 1 — Discord MVP
+Minimal bot:
+
+!ping
+!health
+startup logs
+token loading
+Priority 2 — Production DB Connection
+Supabase PostgreSQL
+alembic upgrade head
+Priority 3 — OCR Proof of Concept
+Use 5 real Korean brokerage screenshots.
+
+Check:
+
+accuracy
+speed
+table parsing quality
+stock name matching
+Priority 4 — First Real User Loop
+1~3 testers use bot.
+
+11. AI Workflow
+ChatGPT
+strategy
+
+PM
+
+prioritization
+
+architecture planning
+
+Claude
+critical review
+
+challenge assumptions
+
+prompt QA
+
+Codex
+code implementation
+
+repo modifications
+
+commits
+
+12. Development Rules
+Before coding:
+1. Ask ChatGPT for roadmap
+2. Ask Claude to critique design/prompt
+3. Use Codex for implementation
+4. Validate locally
+5. Commit to GitHub
+13. Risks to Watch
+Product Risks
+OCR inaccurate
+
+Users dislike screenshot upload friction
+
+Discord too niche
+
+Technical Risks
+brokerage UI changes
+
+OCR table parsing complexity
+
+DB schema drift
+
+Execution Risks
+building tooling instead of product
+
+overengineering early
+
+14. Current Truth Snapshot
+Project alive: YES
+Repo stable: YES
+DB schema ready: YES
+Bot MVP ready: NO
+OCR ready: NO
+Revenue ready: NO
+15. Next Best Move
+Build Discord MVP first.
+Then connect DB.
+Then run OCR POC.
+Then get first testers.
