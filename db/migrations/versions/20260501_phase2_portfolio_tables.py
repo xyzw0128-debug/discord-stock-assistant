@@ -1,7 +1,7 @@
 """phase 2 portfolio tables
 
 Revision ID: 20260501_phase2
-Revises: 
+Revises: 20260501_phase1
 Create Date: 2026-05-01
 """
 
@@ -10,7 +10,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = "20260501_phase2"
-down_revision = None
+down_revision = "20260501_phase1"
 branch_labels = None
 depends_on = None
 

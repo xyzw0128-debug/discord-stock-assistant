@@ -11,7 +11,7 @@ class PortfolioChange(Base):
     user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     previous_snapshot_id: Mapped[int | None] = mapped_column(ForeignKey("portfolio_snapshots.id"))
     new_snapshot_id: Mapped[int | None] = mapped_column(ForeignKey("portfolio_snapshots.id"))
-    ticker: Mapped[str | None] = mapped_column(ForeignKey("stocks_master.ticker"), String(10))
+    ticker: Mapped[str | None] = mapped_column(String(10), ForeignKey("stocks_master.ticker"))
     stock_name: Mapped[str | None] = mapped_column(String(100))
     change_type: Mapped[str | None] = mapped_column(String(20))
     prev_quantity: Mapped[int | None] = mapped_column(Integer)

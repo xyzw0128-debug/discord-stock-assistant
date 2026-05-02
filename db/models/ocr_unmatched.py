@@ -17,7 +17,7 @@ class OCRUnmatched(Base):
     raw_name: Mapped[str | None] = mapped_column(String(100))
     quantity: Mapped[int | None] = mapped_column(Integer)
     avg_price: Mapped[float | None] = mapped_column(Numeric(12, 2))
-    resolved_ticker: Mapped[str | None] = mapped_column(ForeignKey("stocks_master.ticker"), String(10))
+    resolved_ticker: Mapped[str | None] = mapped_column(String(10), ForeignKey("stocks_master.ticker"))
     status: Mapped[str] = mapped_column(String(20), server_default="pending", default="pending")
     resolved_at: Mapped[DateTime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())

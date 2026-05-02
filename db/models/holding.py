@@ -16,7 +16,7 @@ class Holding(Base):
     snapshot_id: Mapped[int] = mapped_column(
         ForeignKey("portfolio_snapshots.id", ondelete="CASCADE"), nullable=False
     )
-    ticker: Mapped[str | None] = mapped_column(ForeignKey("stocks_master.ticker"), String(10))
+    ticker: Mapped[str | None] = mapped_column(String(10), ForeignKey("stocks_master.ticker"))
     stock_name: Mapped[str] = mapped_column(String(100), nullable=False)
     normalized_name: Mapped[str | None] = mapped_column(String(100))
     quantity: Mapped[int] = mapped_column(Integer, nullable=False)

@@ -1,5 +1,6 @@
 """ORM model exports."""
 
+from .base import Base
 from .alert import Alert
 from .holding import Holding
 from .journal_entry import JournalEntry
@@ -13,6 +14,7 @@ from .user import User
 from .user_preference import UserPreference
 
 __all__ = [
+    "Base",
     "User",
     "StockMaster",
     "StockAlias",

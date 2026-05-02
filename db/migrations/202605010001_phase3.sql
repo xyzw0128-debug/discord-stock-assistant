@@ -73,12 +73,3 @@ CREATE INDEX idx_alerts_user_unread
 ON alerts(user_id)
 WHERE is_read = FALSE;
 
--- downgrade()
-DROP INDEX IF EXISTS idx_alerts_user_unread;
-DROP TABLE IF EXISTS alerts;
-
-DROP INDEX IF EXISTS idx_journal_user_date;
-DROP TABLE IF EXISTS journal_entries;
-
-DROP INDEX IF EXISTS idx_changes_user;
-DROP TABLE IF EXISTS portfolio_changes;

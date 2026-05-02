@@ -33,6 +33,10 @@ class StockMaster(Base):
     aliases: Mapped[List["StockAlias"]] = relationship(
         "StockAlias", back_populates="stock", cascade="all, delete-orphan"
     )
+    holdings: Mapped[List["Holding"]] = relationship("Holding", back_populates="stock")
+    portfolio_changes: Mapped[List["PortfolioChange"]] = relationship(
+        "PortfolioChange", back_populates="stock"
+    )
 
 
 class StockAlias(Base):

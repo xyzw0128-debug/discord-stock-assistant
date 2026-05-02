@@ -1,4 +1,4 @@
-"""phase 4 alerts and settings
+"""phase 4 user preferences and upload logs
 
 Revision ID: 20260501_phase4
 Revises: 20260501_phase3
@@ -24,6 +24,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.execute("DROP TABLE IF EXISTS alerts;")
-    op.execute("DROP TABLE IF EXISTS user_preferences;")
     op.execute("DROP TABLE IF EXISTS upload_logs;")
+    op.execute("DROP TABLE IF EXISTS user_preferences;")

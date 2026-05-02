@@ -30,7 +30,3 @@ CREATE TABLE upload_logs (
 CREATE INDEX idx_upload_logs_user_created
 ON upload_logs(user_id, created_at DESC);
 
--- downgrade()
-DROP INDEX IF EXISTS idx_upload_logs_user_created;
-DROP TABLE IF EXISTS upload_logs;
-DROP TABLE IF EXISTS user_preferences;

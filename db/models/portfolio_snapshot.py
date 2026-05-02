@@ -25,6 +25,11 @@ class PortfolioSnapshot(Base):
     ocr_unmatched_items = relationship(
         "OCRUnmatched", back_populates="snapshot", cascade="all, delete-orphan"
     )
+    journal_entries = relationship(
+        "JournalEntry", back_populates="snapshot", cascade="all, delete-orphan"
+    )
+    alerts = relationship("Alert", back_populates="snapshot", cascade="all, delete-orphan")
+    upload_logs = relationship("UploadLog", back_populates="snapshot", cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
         return (
