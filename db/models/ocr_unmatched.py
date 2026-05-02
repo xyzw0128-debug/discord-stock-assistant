@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Integer, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -19,11 +21,11 @@ class OCRUnmatched(Base):
     avg_price: Mapped[float | None] = mapped_column(Numeric(12, 2))
     resolved_ticker: Mapped[str | None] = mapped_column(String(10), ForeignKey("stocks_master.ticker"))
     status: Mapped[str] = mapped_column(String(20), server_default="pending", default="pending")
-    resolved_at: Mapped[DateTime | None] = mapped_column(DateTime(timezone=True))
-    created_at: Mapped[DateTime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     snapshot = relationship("PortfolioSnapshot", back_populates="ocr_unmatched_items")
-    stock = relationship("StockMaster")
+    stock = relationship("StockMaster", back_populates="ocr_unmatched_items")
 
     def __repr__(self) -> str:
         return (

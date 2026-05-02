@@ -1,5 +1,8 @@
-from sqlalchemy import Boolean, CheckConstraint, ForeignKey, Integer, String, Text, text
+from datetime import datetime
+
+from sqlalchemy import Boolean, CheckConstraint, DateTime, ForeignKey, Integer, String, Text, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import func
 
 from .base import Base
 
@@ -13,7 +16,7 @@ class Alert(Base):
     alert_type: Mapped[str | None] = mapped_column(String(30))
     message: Mapped[str] = mapped_column(Text, nullable=False)
     is_read: Mapped[bool] = mapped_column(Boolean, server_default=text("FALSE"))
-    created_at = mapped_column(Text, server_default=text("NOW()"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     __table_args__ = (
         CheckConstraint(

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, ForeignKey, Integer, Numeric, String
+from sqlalchemy import TIMESTAMP, Boolean, ForeignKey, Integer, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from sqlalchemy.types import TIMESTAMP
 
 from .base import Base
 
@@ -35,7 +35,7 @@ class UserPreference(Base):
         server_default="true",
     )
     language: Mapped[str] = mapped_column(String(10), nullable=False, server_default="ko")
-    updated_at: Mapped[TIMESTAMP] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         nullable=False,
         server_default=func.now(),

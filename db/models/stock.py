@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 
 from sqlalchemy import (
@@ -26,7 +27,7 @@ class StockMaster(Base):
     short_name: Mapped[str | None] = mapped_column(String(50), nullable=True)
     market: Mapped[str] = mapped_column(String(10), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default=text("true"))
-    updated_at: Mapped[DateTime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=text("now()")
     )
 
@@ -36,6 +37,9 @@ class StockMaster(Base):
     holdings: Mapped[List["Holding"]] = relationship("Holding", back_populates="stock")
     portfolio_changes: Mapped[List["PortfolioChange"]] = relationship(
         "PortfolioChange", back_populates="stock"
+    )
+    ocr_unmatched_items: Mapped[List["OCRUnmatched"]] = relationship(
+        "OCRUnmatched", back_populates="stock"
     )
 
 
